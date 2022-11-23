@@ -1,10 +1,6 @@
 <script>
 export default {
   props: {
-    text: {
-      type: String,
-      default: "",
-    },
     disabled: {
       type: Boolean,
       default: false,
@@ -12,17 +8,19 @@ export default {
   },
   data() {
     return {
-      class: [this.$props.disabled && "button-disabled"],
+      class: [this.$props.disabled && "button_disabled"],
     };
   },
   updated() {
-    this.class = [this.$props.disabled && "button-disabled"];
+    this.class = [this.$props.disabled && "button_disabled"];
   },
 };
 </script>
 
 <template>
-  <button :class="class" class="button">{{ text }}</button>
+  <button :class="class" class="button">
+    <slot></slot>
+  </button>
 </template>
 
 <style>
@@ -36,7 +34,7 @@ export default {
   cursor: pointer;
   background: linear-gradient(270deg, #ffa800 0%, #ff6f00 100%);
 }
-.button-disabled {
+.button_disabled {
   background: transparent;
   border: 2px solid rgba(151, 151, 151, 0.3);
   color: #acacac;

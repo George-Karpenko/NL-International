@@ -41,6 +41,7 @@ export default {
   grid-template-columns: repeat(auto-fill, 271px);
   gap: 20px;
   justify-content: center;
+  margin-bottom: 176px;
 }
 .cardCategory__background {
   display: inline-block;

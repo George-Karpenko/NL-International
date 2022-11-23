@@ -32,26 +32,25 @@ export default {
   top: 0;
   left: 0;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   background: hsla(237, 15%, 24%, 0.8);
   mix-blend-mode: normal;
 }
 .modal__dialog {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  height: 16px;
-  width: 16px;
-  cursor: pointer;
-}
-.model__close {
   position: relative;
-  margin: 400px auto;
-  width: 769px;
-  height: 144px;
-  padding: 28px 18px 23px 19px;
+  margin: min(400px, min(21vw, 21vh)) auto;
+  width: min(769px, 100%);
+  padding: 29px 18px 32px 19px;
   background: #ffffff;
   box-shadow: 0px 2px 10px rgba(151, 151, 151, 0.2);
   border-radius: 5px;
+}
+.model__close {
+  position: absolute;
+  top: 18px;
+  color: var(--grey);
+  right: 18px;
+  font-size: 16px;
+  cursor: pointer;
 }
 </style>

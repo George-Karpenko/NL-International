@@ -3,7 +3,7 @@ export default {
   props: {
     cityName: {
       type: String,
-      default: "",
+      required: true,
     },
   },
   emits: ["openModal"],
@@ -18,10 +18,10 @@ export default {
   <header class="header">
     <div class="container header__container">
       <div class="row">
-        <p class="header__text" @click="openModal">
+        <div class="header__content" @click="openModal">
           <i class="header__icon icon-location"></i>
-          {{ cityName }}
-        </p>
+          <span class="header__text">{{ cityName }}</span>
+        </div>
       </div>
     </div>
   </header>
@@ -39,11 +39,19 @@ export default {
   align-items: center;
   height: 100%;
 }
+.header__content {
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+}
 .header__text {
   font-size: 15px;
   line-height: 24px;
+  margin-top: 1px;
 }
 .header__icon {
-  color: #dadada;
+  color: var(--grey);
+  font-size: 16px;
+  margin-right: 7px;
 }
 </style>

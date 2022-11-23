@@ -22,8 +22,8 @@
 .loader__icon {
   position: absolute;
   top: 50%;
-  left: 50%;
-
+  right: 50%;
+  transform: translate(50%, -50%);
   width: 200px;
   height: 200px;
   display: flex;

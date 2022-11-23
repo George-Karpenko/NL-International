@@ -5,15 +5,15 @@ import TheError from "../components/TheError.vue";
 
 export default {
   computed: {
-    ...mapState(useErrorStore, ["errorTitle", "errorMessage"]),
+    ...mapState(useErrorStore, ["error"]),
   },
   components: { TheError },
 };
 </script>
 
 <template>
-  <component v-if="!errorTitle" :is="$route.meta.layoutComponent">
-    <slot></slot>
-  </component>
-  <TheError v-else :title="errorTitle" :message="errorMessage" />
+  <TheError
+    title="Ошибка 404"
+    :message="`Страница с адресом ${$route.params.catchAll} не найдена.`"
+  />
 </template>

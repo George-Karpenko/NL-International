@@ -3,43 +3,14 @@ import BaseButton from "./BaseButton.vue";
 
 export default {
   props: {
-    main_image_thumb_300: {
-      type: String,
-      default: "",
-    },
-    category: {
+    product: {
       type: Object,
-      default: {},
-    },
-    present_name: {
-      type: String,
-      default: "",
-    },
-    comment_name: {
-      type: String,
-      default: "",
-    },
-    price: {
-      type: Number,
-      default: 0,
-    },
-    alloved: {
-      type: Boolean,
-      default: false,
-    },
-    available: {
-      type: Boolean,
-      default: false,
+      required: true,
     },
   },
   computed: {
     isProductInStock() {
-      console.log(
-        this.$props.alloved,
-        this.$props.available,
-        this.$props.alloved && this.$props.available
-      );
-      return this.$props.alloved && this.$props.available;
+      return this.$props.product.alloved && this.$props.product.available;
     },
     printIsProductInStock() {
       return this.isProductInStock ? "В корзину" : "Нет в наличии";
@@ -51,16 +22,14 @@ export default {
 
 <template>
   <div class="product">
-    <img class="product__img" :src="main_image_thumb_300" />
-    <p class="product__category">{{ category.name }}</p>
-    <p class="product__title">{{ present_name }}</p>
-    <p class="product__comment">{{ comment_name }}</p>
-    <p class="product__price">{{ price }} ₽</p>
-    <BaseButton
-      class="product__button"
-      :disabled="!isProductInStock"
-      :text="printIsProductInStock"
-    />
+    <img class="product__img" :src="product.main_image_thumb_300" />
+    <p class="product__category">{{ product.category.name }}</p>
+    <p class="product__title">{{ product.present_name }}</p>
+    <p class="product__comment">{{ product.comment_name }}</p>
+    <p class="product__price">{{ product.price }} ₽</p>
+    <BaseButton class="product__button" :disabled="!isProductInStock">
+      {{ printIsProductInStock }}
+    </BaseButton>
   </div>
 </template>
 
@@ -70,7 +39,6 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 276px;
   background: #ffffff;
   box-shadow: 0px 2px 10px rgba(151, 151, 151, 0.2);
   border-radius: 0px 0px 5px 5px;
@@ -82,25 +50,38 @@ export default {
 }
 .product__button {
   margin: 16px auto 23px auto;
+  padding: 0px 0px 4px 1px;
+  color: rgba(39, 39, 39, 0.5);
 }
 .product__price {
   font-size: 26px;
   line-height: 24px;
+  margin-top: 13px;
+  margin-right: 7px;
+  margin-bottom: 0;
 }
 .product__comment {
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
   margin-top: auto;
+  margin-bottom: 0;
+  margin-left: 1px;
 }
 .product__category {
   font-weight: 400;
   font-size: 14px;
   line-height: 14px;
-  color: #979797;
+  margin-top: 6px;
+  margin-bottom: 0;
+  color: var(--grey);
 }
 .product__title {
   font-size: 20px;
   line-height: 24px;
+  margin-top: 4px;
+  margin-right: 20px;
+  margin-left: 24px;
+  margin-bottom: 10px;
 }
 </style>

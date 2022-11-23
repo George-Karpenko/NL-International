@@ -1,34 +1,75 @@
 <script>
-import BaseLoader from "../components/BaseLoader.vue";
-import TheHeader from "../components/TheHeader.vue";
+import { RouterView } from "vue-router";
+import { mapActions, mapState } from "pinia";
+import { useCategoryStore, useCityStore } from "@/stores";
+
+import BaseModal from "@/components/BaseModal.vue";
+import BaseInputSearch from "@/components/BaseInputSearch.vue";
+import BaseLoader from "@/components/BaseLoader.vue";
+import TheHeader from "@/components/TheHeader.vue";
 
 export default {
-  props: {
-    cityName: {
-      type: String,
-      default: "",
+  data() {
+    return {
+      isOpenModal: false,
+      cityStore: useCityStore(),
+    };
+  },
+  components: {
+    BaseModal,
+    BaseInputSearch,
+    BaseLoader,
+    TheHeader,
+  },
+  computed: {
+    ...mapState(useCityStore, ["cities"]),
+    city: {
+      get() {
+        return useCityStore().city;
+      },
+      set(city) {
+        this.updateCity(city);
+      },
     },
   },
-  components: { BaseLoader, TheHeader },
+  watch: {
+    "city.id"(newCityId) {
+      this.allCategories(newCityId);
+    },
+  },
+  methods: {
+    ...mapActions(useCategoryStore, ["allCategories"]),
+    ...mapActions(useCityStore, ["updateCity", "allCities"]),
+    openModal() {
+      this.isOpenModal = true;
+    },
+    closeModal() {
+      this.isOpenModal = false;
+    },
+  },
+  created() {
+    this.allCities().then(() => {
+      this.allCategories();
+    });
+  },
 };
 </script>
 
 <template>
-  <template v-if="this.$slots.h1">
-    <div v-if="this.$slots.h1" class="container container-h1">
-      <RouterLink :to="{ name: 'home' }">
-        <i class="icon-arrow-left"></i>
-      </RouterLink>
-      <h1><slot name="h1"></slot></h1>
-    </div>
-    <div class="container container-category">
-      <aside v-if="this.$slots.aside">
-        <slot name="aside"></slot>
-      </aside>
-      <main v-if="this.$slots.default" class="products">
-        <slot></slot>
-      </main>
-      <BaseLoader v-else />
-    </div>
+  <TheHeader @openModal="openModal" :cityName="city.city" />
+  <template v-if="city">
+    <RouterView />
   </template>
+  <BaseLoader v-else />
+  <BaseModal v-if="isOpenModal" @closeModal="closeModal">
+    <BaseInputSearch
+      v-model="city"
+      :placeholder="'Например, Санкт-петербург'"
+      :labelValue="'Выбор населённого пункта:'"
+      :options="cities"
+      :keyOption="'label'"
+      @update:modelValue="closeModal"
+    >
+    </BaseInputSearch>
+  </BaseModal>
 </template>

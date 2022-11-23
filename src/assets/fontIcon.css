@@ -34,6 +34,17 @@
 .icon-location:before {
   content: "\e900";
 }
+.icon-arrow-left {
+  position: relative;
+}
 .icon-arrow-left:before {
-  content: "\2b60";
+  content: "\2b05";
+  color: ;
+}
+.icon-arrow-left:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "\2b06";
+  color: rgb(255, 255, 255);
 }

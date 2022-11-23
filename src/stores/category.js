@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import * as category from "@/api/category";
+import api from "@/api";
 
 export const useCategoryStore = defineStore("category", {
   state: () => {
@@ -9,11 +9,14 @@ export const useCategoryStore = defineStore("category", {
       category: {},
     };
   },
-  // could also be defined as
-  // state: () => ({ count: 0 })
   actions: {
     async allCategories(cityID) {
-      this.categories = await category.allCategories(cityID);
+      const response = await api.get("/menutags/", {
+        params: {
+          city_id: cityID,
+        },
+      });
+      this.categories = response.data.tags;
     },
     async findCategory(cityID, slug) {
       if (!this.categories.length) {
@@ -23,7 +26,12 @@ export const useCategoryStore = defineStore("category", {
       this.category = this.categories.find(
         (category) => category.slug === slug
       );
-      this.products = (await category.findCategory(cityID, slug)).products;
+      const response = await api.get(`/menutags/${slug}`, {
+        params: {
+          city_id: cityID,
+        },
+      })
+      this.products = response.data.products;
     },
   },
 });

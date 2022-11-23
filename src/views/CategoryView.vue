@@ -6,6 +6,12 @@ import TheAside from "../components/TheAside.vue";
 import ProductCard from "../components/ProductCard.vue";
 import ThePageTitle from "../components/ThePageTitle.vue";
 export default {
+  props: {
+    slug: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       isNewProducts: false,
@@ -14,9 +20,12 @@ export default {
   computed: {
     ...mapState(useCategoryStore, ["category", "products"]),
     ...mapState(useCityStore, ["city"]),
+    isAside() {
+      return this.category.children.length >= 2;
+    },
   },
   created() {
-    this.findCategory(this.city.id, this.$route.params.slug).then(() => {
+    this.findCategory(this.city.id, this.slug).then(() => {
       this.isNewProducts = true;
     });
   },
@@ -24,8 +33,8 @@ export default {
     ...mapActions(useCategoryStore, ["findCategory"]),
   },
   watch: {
-    city(newCity) {
-      this.findCategory(newCity.id, this.$route.params.slug);
+    "city.id"(newCityId) {
+      this.findCategory(newCityId, this.slug);
     },
   },
   components: { BaseLoader, TheAside, ProductCard, ThePageTitle },
@@ -34,45 +43,45 @@ export default {
 
 <template>
   <template v-if="isNewProducts">
-    <ThePageTitle :title="category.name">
-      <RouterLink :to="{ name: 'home' }">
-        <i class="h1__icon icon-arrow-left"></i>
-      </RouterLink>
-    </ThePageTitle>
-    <div class="container category">
-      <aside class="category__aside">
+    <ThePageTitle :title="category.name" />
+    <div class="container">
+      <div :class="!isAside && 'category__no-aside'" class="category row">
         <TheAside
+          v-if="isAside"
+          class="category__aside"
           :subcategories="category.children"
-          :slug="$route.params.slug"
+          :slug="slug"
         />
-      </aside>
-      <main v-if="isNewProducts" class="category__main">
-        <ProductCard v-for="product in products" :="product" />
-      </main>
+        <main v-if="isNewProducts" class="category__main">
+          <ProductCard v-for="product in products" :product="product" />
+        </main>
+      </div>
     </div>
   </template>
   <BaseLoader v-else />
 </template>
 
 <style>
-.h1__icon {
-  background-color: #000;
-  color: #fff;
-  padding: 16px;
-  border-radius: 50%;
-  font-size: 14px;
-  cursor: pointer;
-}
 .category {
   display: grid;
   gap: 34px;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 1fr;
+  margin-bottom: 194px;
+}
+
+.category__no-aside {
+  grid-template-columns: 1fr !important;
 }
 
 .category__main {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 276px);
+  grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
   justify-content: center;
   gap: 24px;
+}
+@media (min-width: 700px) {
+  .category {
+    grid-template-columns: 240px 1fr;
+  }
 }
 </style>

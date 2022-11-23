@@ -1,19 +1,22 @@
 import { defineStore } from "pinia";
-import * as city from "@/api/city";
+import api from "@/api";
 
 export const useCityStore = defineStore("city", {
   state: () => {
     return {
       city: JSON.parse(localStorage.getItem("city")) || false,
       cities: [],
-      errors: [],
     };
   },
-  // could also be defined as
-  // state: () => ({ count: 0 })
   actions: {
     async allCities() {
-      this.cities = await city.allCities();
+      const response = await await api.get("/city/", {
+        params: {
+          term: "sas",
+          country: "ru",
+        },
+      });
+      this.cities = response.data.data;
       if (this.city) {
         return;
       }
