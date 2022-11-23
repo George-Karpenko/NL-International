@@ -32,7 +32,7 @@ export default {
   top: 0;
   left: 0;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   background: hsla(237, 15%, 24%, 0.8);
   mix-blend-mode: normal;
 }

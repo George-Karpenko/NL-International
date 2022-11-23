@@ -57,7 +57,7 @@ export default {
 
 <template>
   <TheHeader @openModal="openModal" :cityName="city.city" />
-  <template v-if="city">
+  <template v-if="city" :class="isOpenModal && 'overflow-hidden'">
     <RouterView />
   </template>
   <BaseLoader v-else />
@@ -73,3 +73,9 @@ export default {
     </BaseInputSearch>
   </BaseModal>
 </template>
+
+<style>
+.overflow-hidden {
+  overflow: hidden;
+}
+</style>
