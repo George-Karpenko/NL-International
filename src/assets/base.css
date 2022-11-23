@@ -32,11 +32,16 @@ body {
 }
 
 .container {
-  max-width: 1190px;
+  max-width: 1248px;
   width: 100%;
   margin: auto;
 }
 
 .row {
   margin: 0 20px;
+}
+@media (min-width: 1300px) {
+  .container {
+    padding-right: 58px;
+  }
 }

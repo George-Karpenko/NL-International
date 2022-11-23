@@ -163,7 +163,7 @@ export default {
   flex: 1;
 }
 .input__group {
-  margin-top: 10px;
+  margin-top: 11px;
   display: flex;
   flex-wrap: wrap;
   row-gap: 20px;
@@ -256,7 +256,7 @@ export default {
   cursor: pointer;
   color: var(--grey);
 }
-.input__listOption:hover {
+.input__option:hover {
   color: var(--dark-grey);
 }
 @container input (min-width: 700px) {

@@ -32,13 +32,14 @@ export default {
   top: 0;
   left: 0;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   background: hsla(237, 15%, 24%, 0.8);
   mix-blend-mode: normal;
 }
 .modal__dialog {
   position: relative;
-  margin: min(400px, min(21vw, 21vh)) auto;
+  margin: auto;
+  margin-top: min(400px, min(21vw, 43vh));
   width: min(769px, 100%);
   padding: 29px 18px 32px 19px;
   background: #ffffff;
