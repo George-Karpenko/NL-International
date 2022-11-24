@@ -14,16 +14,11 @@ export default {
   updated() {
     this.class = [this.$props.disabled && "button_disabled"];
   },
-  methods: {
-    d() {
-      alert(2);
-    },
-  },
 };
 </script>
 
 <template>
-  <button @click="d" :class="class" class="button">
+  <button :class="class" class="button">
     <slot></slot>
   </button>
 </template>
