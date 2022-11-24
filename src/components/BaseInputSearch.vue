@@ -186,10 +186,18 @@ export default {
   line-height: 21px;
   padding-right: 5px;
   padding-bottom: 2px;
-}
-
-.input__button {
   background: linear-gradient(270deg, #ffa800 0%, #ff6f00 60.2%);
+}
+.input__button::before {
+  background: linear-gradient(
+    270deg,
+    rgba(255, 168, 0, 0.6) 0%,
+    rgba(255, 111, 0, 0.6) 100%
+  );
+  width: calc(100% - 29px);
+  height: 48px;
+  border-radius: 0;
+  transform: translateY(8px);
 }
 .input__button_disabled {
   background: transparent;

@@ -10,7 +10,7 @@ export default {
   },
   computed: {
     isProductInStock() {
-      return this.$props.product.alloved && this.$props.product.available;
+      return this.$props.product.allowed && this.$props.product.available;
     },
     printIsProductInStock() {
       return this.isProductInStock ? "В корзину" : "Нет в наличии";
@@ -51,6 +51,8 @@ export default {
 .product__button {
   margin: 16px auto 23px auto;
   padding: 0px 0px 4px 1px;
+}
+.product__button_disabled {
   color: rgba(39, 39, 39, 0.5);
 }
 .product__price {
